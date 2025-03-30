@@ -1,0 +1,115 @@
+/* Estilo general del body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo para el contenedor de productos */
+#product-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/* Estilo para las tarjetas de productos */
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    width: 250px;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.card h3 {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.card p {
+    font-size: 1em;
+    color: #333;
+    margin: 10px 0;
+}
+
+.card button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.card button:hover {
+    background-color: #0056b3;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+/* Estilo para la tabla del carrito */
+table {
+    width: 100%;
+    margin-top: 40px;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+
+td button:hover {
+    background-color: #c82333;
+}
+
+.divComprar{
+    width: 230px;
+    height: 100px;
+    border: 1px solid black;
+    margin: auto;
+    display: block;
+    margin-top: 20px;
+    justify-content: center;
+}
+.comprar{
+    width: 150px;
+    height:30px;
+    position: relative;
+    left: 33px;
+}
+
+.label-tittle{
+text-align: center;
+}
+
+.total{
+    height: 30px;
+    width: 97%;
+    font-weight: bold;
+    color: black;
+    font-size: 1.3em;
+}

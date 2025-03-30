@@ -1,73 +1,100 @@
-// Vamos a hacer un stock limitado de ropa de tienda
+// html y css cards para productos de venta, precios y nombre y detalles de cada producto
 
-// donde el cliente cuando pregunte por una Prenda pueda saber el precio y sus detalles
+// el cliente podra cliquear en los productos y deben guardarse en el carrito(cerrando la pesta;a igual deben guardarse)
 
-// El usuario preguntara por una prenda del stock y le dira el nombre, color y precio con o sin descuento, depende si la prenda presenta alguna falla o no
+// habran productos con descuentos y stock
 
-let prendas =[
-    {
-        nombre : "pantalon",
-        color : "azul",
-        falla : false,
-        precio : 50,
-    },
-    {
-        nombre : "remera",
-        color : "blanco",
-        falla : false,
-        precio : 30,
-    },
-    {
-        nombre : "calcetines",
-        color : "gris",
-        falla : true,
-        precio : 10,
-    },
-    {
-        nombre : "zapatillas",
-        color : "negras",
-        falla : false,
-        precio : 150,
+// cuando el cliente aprete el boton COMPRAR esos productos se deconmtaran del stock, entonces se baja el numero de stock y dira compra realizada.
+let carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+
+const Productos = [
+    { id: 1, nombre: "Campera Prada", precio: 200, stock: 60, img: "../assets/img/art4.jpg" },
+    { id: 2, nombre: "Chaleco Prada", precio: 300, stock: 10, img: "../assets/img/art2.jpg" },
+    { id: 3, nombre: "Falda Prada", precio: 700, stock: 2, img: "../assets/img/art6.jpg" },
+    { id: 4, nombre: "remera Prada", precio: 249, stock: 2, img: "../assets/img/art3.jpg" },
+    { id: 5, nombre: "Chaqueta Prada", precio: 999, stock: 2, img: "../assets/img/art5.jpg" },
+    { id: 6, nombre: "Sueter Prada", precio: 449, stock: 2, img: "../assets/img/art1.jpg" },
+];
+
+const container = document.getElementById('product-container');  
+
+
+Productos.forEach(function(producto) {
+    const tarjeta = document.createElement('div');
+    tarjeta.className = 'card';
+    tarjeta.innerHTML = `
+        <img src="${producto.img}" alt="${producto.nombre}"> 
+        <h3>${producto.nombre}</h3> 
+        <p>Precio $${producto.precio}</p> 
+        <button onclick="agregarProducto('${producto.nombre}', ${producto.precio})">Agregar</button>
+    `;
+    container.appendChild(tarjeta);
+});
+
+
+function agregarProducto(nombre, precio) {
+    const productoExistente = carrito.find(producto => producto.nombre === nombre);
+    if (productoExistente) {
+        productoExistente.cantidad += 1;
+    } else {
+        const producto = { nombre, precio, cantidad: 1 };
+        carrito.push(producto);
     }
-]
 
-function catalogo (){
-    let catalogoLista = prendas.map (prenda => `prenda: ${prenda.nombre}, color: ${prenda.color} `).join ('\n');
-    alert (`Bienvenido, este es nuestro catalogo:\n ${catalogoLista}`)
+
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    actualizarTabla();
+    actualizarTotal();
 }
 
-function aplicarDescuento(precio, falla){
-    if (falla) {
-        return precio * 0.75;
-    }
-    return precio;
+
+function eliminarProducto(index) {
+    carrito.splice(index, 1);
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    actualizarTabla();
+    actualizarTotal();
 }
 
-let desea = prompt("Deseas ver el catalogo? si/no").toLocaleLowerCase();
+function actualizarTabla() {
+    const tabla = document.getElementById('carritoTabla').getElementsByTagName('tbody')[0];
+    tabla.innerHTML = ''; 
 
+    carrito.forEach((producto, index) => {
+        const row = tabla.insertRow();
 
-while (true) {
-    if (desea === "si"){
-        console.log("Viendo el catalogo");
-        catalogo()
-        break;
-    } else if (desea === "no"){ 
-        const ropa = prompt("Quiero mas informacion de (zapatillas, pantalon, calcetines, remera):").toLocaleLowerCase();
-        let prendaEncontrada = prendas.find(prenda => prenda.nombre.toLocaleLowerCase() === ropa);
+        const cellNombre = row.insertCell(0);
+        cellNombre.textContent = producto.nombre;
 
-        if (prendaEncontrada){
+        const cellPrecio = row.insertCell(1);
+        cellPrecio.textContent = `$${producto.precio}`;
 
-            let precioFinal = aplicarDescuento(prendaEncontrada.precio, prendaEncontrada.falla);
+        const cellCantidad = row.insertCell(2);
+        cellCantidad.textContent = producto.cantidad;
 
-            alert(`nombre: ${prendaEncontrada.nombre}, color: ${prendaEncontrada.color}, costo: $${precioFinal.toFixed(2)}`);
-        }else {
-            alert("Prenda no encontrada.");
-        }
-        break;
-    }else {
-        alert("Opción no válida. Por favor, ingresa 'si' o 'no'.");
-    }
-    break;
-
+        const cellEliminar = row.insertCell(3);
+        const botonEliminar = document.createElement('button');
+        botonEliminar.textContent = 'Borrar';
+        botonEliminar.onclick = () => eliminarProducto(index);
+        cellEliminar.appendChild(botonEliminar);
+    });
 }
+
+function actualizarTotal() {
+    let total = 0;
+
+    carrito.forEach(producto => {
+        total += producto.cantidad * producto.precio;
+    });
+
+    const inputComprar = document.getElementsByClassName('total')[0];
+    inputComprar.value = `$${total.toFixed(2)}`;
+}
+
+
+actualizarTabla();
+actualizarTotal();
+
+
+
+
 
