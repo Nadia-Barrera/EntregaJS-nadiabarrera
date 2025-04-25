@@ -1,0 +1,1 @@
+He desarrollado un e-commerce que incluye un carrito de compras. En este carrito, puedes agregar los productos que desees, y su precio se va sumando automáticamente. De esta manera, puedes ver el total de tu compra en todo momento, facilitando el proceso de compra y mejorando la experiencia del usuario
