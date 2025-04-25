@@ -1,0 +1,14 @@
+[
+    { "id": "1", "nombre": "Campera Prada", "precio": "199", "stock": "60", "img": "../assets/img/art4.jpg" },
+    { "id": "2", "nombre": "Chaleco Prada", "precio": "299", "stock": "10", "img": "../assets/img/art2.jpg" },
+    { "id": "3", "nombre": "Falda Prada", "precio": "699", "stock": "2", "img": "../assets/img/art6.jpg" },
+    { "id": "4", "nombre": "remera Prada", "precio": "249", "stock": "2", "img": "../assets/img/art3.jpg" },
+    { "id": "5", "nombre": "Chaqueta Prada", "precio": "999", "stock": "2", "img": "../assets/img/art5.jpg" },
+    { "id": "6", "nombre": "Sueter Prada", "precio": "449", "stock": "2", "img": "../assets/img/art1.jpg" },
+    { "id": "7", "nombre": "Vestido Lali", "precio": "1399", "stock": "2", "img": "../assets/img/art7.jpg" },
+    { "id": "8", "nombre": "Vestido Ross", "precio": "1499", "stock": "2", "img": "../assets/img/art8.jpg" },
+    { "id": "9", "nombre": "Vestido Anabell", "precio": "999", "stock": "2", "img": "../assets/img/art9.jpg" },
+    { "id": "10", "nombre": "Vestido Carmen", "precio": "1999", "stock": "2", "img": "../assets/img/art10.jpg" },
+    { "id": "11", "nombre": "Vestido Dior", "precio": "2459", "stock": "2", "img": "../assets/img/art11.jpg" },
+    { "id": "12", "nombre": "Vestido Paisy", "precio": "2999", "stock": "2", "img": "../assets/img/art12.jpg" }
+]

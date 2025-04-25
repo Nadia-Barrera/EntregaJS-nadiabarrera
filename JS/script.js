@@ -7,29 +7,39 @@
 // cuando el cliente aprete el boton COMPRAR esos productos se deconmtaran del stock, entonces se baja el numero de stock y dira compra realizada.
 let carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
 
-const Productos = [
-    { id: 1, nombre: "Campera Prada", precio: 200, stock: 60, img: "../assets/img/art4.jpg" },
-    { id: 2, nombre: "Chaleco Prada", precio: 300, stock: 10, img: "../assets/img/art2.jpg" },
-    { id: 3, nombre: "Falda Prada", precio: 700, stock: 2, img: "../assets/img/art6.jpg" },
-    { id: 4, nombre: "remera Prada", precio: 249, stock: 2, img: "../assets/img/art3.jpg" },
-    { id: 5, nombre: "Chaqueta Prada", precio: 999, stock: 2, img: "../assets/img/art5.jpg" },
-    { id: 6, nombre: "Sueter Prada", precio: 449, stock: 2, img: "../assets/img/art1.jpg" },
-];
+// // const data = [
+// //     { id: 1, nombre: "Campera Prada", precio: 200, stock: 60, img: "../assets/img/art4.jpg" },
+// //     { id: 2, nombre: "Chaleco Prada", precio: 300, stock: 10, img: "../assets/img/art2.jpg" },
+// //     { id: 3, nombre: "Falda Prada", precio: 700, stock: 2, img: "../assets/img/art6.jpg" },
+// //     { id: 4, nombre: "remera Prada", precio: 249, stock: 2, img: "../assets/img/art3.jpg" },
+// //     { id: 5, nombre: "Chaqueta Prada", precio: 999, stock: 2, img: "../assets/img/art5.jpg" },
+// //     { id: 6, nombre: "Sueter Prada", precio: 449, stock: 2, img: "../assets/img/art1.jpg" },
+// // ];
+
+async function fechData(){
+    try{
+        const response = await fetch("API/productos.json");
+        const data = await response.json()
+
+
+        data.forEach(function(producto) {
+            const tarjeta = document.createElement('div');
+            tarjeta.className = 'card';
+            tarjeta.innerHTML = `
+                <img src="${producto.img}" alt="${producto.nombre}"> 
+                <h3>${producto.nombre}</h3> 
+                <p>Precio $${producto.precio}</p> 
+                <button onclick="agregarProducto('${producto.nombre}', ${producto.precio})">Agregar</button>
+            `;
+            container.appendChild(tarjeta);
+        });
+    }catch(error){
+        console.error("no funciona", error);
+    }
+}
+fechData();
 
 const container = document.getElementById('product-container');  
-
-
-Productos.forEach(function(producto) {
-    const tarjeta = document.createElement('div');
-    tarjeta.className = 'card';
-    tarjeta.innerHTML = `
-        <img src="${producto.img}" alt="${producto.nombre}"> 
-        <h3>${producto.nombre}</h3> 
-        <p>Precio $${producto.precio}</p> 
-        <button onclick="agregarProducto('${producto.nombre}', ${producto.precio})">Agregar</button>
-    `;
-    container.appendChild(tarjeta);
-});
 
 
 function agregarProducto(nombre, precio) {
@@ -53,6 +63,14 @@ function eliminarProducto(index) {
     localStorage.setItem('carrito', JSON.stringify(carrito));
     actualizarTabla();
     actualizarTotal();
+}
+
+function borrarCarrito (){
+    carrito = [];
+    actualizarTabla();
+    actualizarTotal();
+
+
 }
 
 function actualizarTabla() {
@@ -88,6 +106,30 @@ function actualizarTotal() {
 
     const inputComprar = document.getElementsByClassName('total')[0];
     inputComprar.value = `$${total.toFixed(2)}`;
+    
+    const comprarBtn = document.getElementById('comprar');
+    comprarBtn.addEventListener ("click", function(){
+
+        Swal.fire({
+            title: "Realizar compra?",
+            text: "Tu pedido se confirmará al finalizar. ¡Gracias!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Comprar"
+        }).then((result) => {
+            if (result.isConfirmed) {
+            Swal.fire({
+                title: "Compra realizada!",
+                text: "Gracias por su compra.",
+                icon: "success"
+            });
+            borrarCarrito();
+            }
+        });
+    }
+)
 }
 
 
